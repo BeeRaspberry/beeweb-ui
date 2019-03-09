@@ -1,0 +1,17 @@
+.dialogdemoBasicUsage #popupContainer {
+  position: relative;
+}
+
+#state-province-dialog {
+  max-width: 90%;
+  width: 500px;
+}
+
+.mat-form-field {
+    display: block;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}

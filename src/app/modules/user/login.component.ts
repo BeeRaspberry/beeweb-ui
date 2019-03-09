@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   private subscription: Subscription;
   loginForm: FormGroup;
   loading = false;
-  returnUrl: string;
+  returnUrl: string = '/';
   submitted = false;
   showLoginModal = false;
 
@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
   login() {
     this.submitted = true;
 
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }

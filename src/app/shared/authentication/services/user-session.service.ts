@@ -13,8 +13,7 @@ import {environment} from '../../../../environments/environment';
 export class UserSessionService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
-    public static isAdmin: boolean = false;
-    private provider = '';
+    private provider: string;
 
   constructor(
     private http: HttpClient,
@@ -24,7 +23,31 @@ export class UserSessionService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
+  getLoggedIn(): boolean {
+    const temp = JSON.parse(localStorage.getItem('currentUser'));
+    if (temp && 'id' in temp) {
+      return true;
+    }
+    return false;
+  }
+
+  getAdmin(): boolean {
+    const temp = JSON.parse(localStorage.getItem('currentUser'));
+    if (temp && 'admin' in temp) {
+      return true;
+    }
+    return false;
+  }
+
+  getUserName(): string {
+    const temp = localStorage.getItem('currentUser');
+    const userName = JSON.parse(localStorage.getItem('currentUser'));
+    if ('name' in userName) { return userName['name']};
+    return userName['first_name'] + ' ' + userName['last_name'];
+  }
+
   login(email: string, password: string): Observable<any> {
+    console.log(email, password);
     return this.http.post<any>(`${environment.apiUrl}/login`, { email, password })
         .pipe(map(user => {
         // login successful if there's a jwt token in the response

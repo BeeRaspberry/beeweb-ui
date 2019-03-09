@@ -1,0 +1,43 @@
+<mat-sidenav-container>
+  <mat-sidenav  #sidenav role="navigation">
+   <mat-nav-list>
+    <a mat-list-item>
+      <mat-icon class="icon">home</mat-icon>
+        <span class="label">&nbsp;Home</span>
+    </a>
+    <a mat-list-item>
+      <mat-icon class="icon">about</mat-icon>
+      <span>About</span>
+    </a>
+    <app-admin-navbar *ngIf="userSessionService.getAdmin()"></app-admin-navbar>
+    <app-loggedin-side-navbar *ngIf="userSessionService.getLoggedIn()"></app-loggedin-side-navbar>
+    <app-login-side-navbar *ngIf="!userSessionService.getLoggedIn()"></app-login-side-navbar>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+     <div fxHide.gt-xs>
+       <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+     <div>
+       <a>
+         <mat-icon class="icon">home</mat-icon>
+         Bee Web
+       </a>
+      </div>
+      <div>
+         <a href="about">About</a>
+     </div>
+     <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
+        <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+          <app-loggedin-navbar *ngIf="userSessionService.getLoggedIn()"></app-loggedin-navbar>
+          <app-login-navbar *ngIf="!userSessionService.getLoggedIn()"></app-login-navbar>
+        </ul>
+     </div>
+    </mat-toolbar>
+    <main>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

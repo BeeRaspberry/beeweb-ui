@@ -1,0 +1,41 @@
+<mat-card class="province-card">
+   <mat-card-header>
+     <mat-card-title>State/Province</mat-card-title>
+   </mat-card-header>
+   <mat-card-content>
+     <form class="example-form" [formGroup]="provinceForm">
+       <table class="example-full-width" cellspacing="0">
+         <tr>
+           <td>
+             <mat-form-field class="example-full-width">
+             <input matInput placeholder="Name" [(ngModel)]="formData.name" formControlName="name" required>
+             </mat-form-field>
+           </td>
+         </tr>
+         <tr>
+         <td><mat-form-field class="example-full-width">
+           <input matInput placeholder="Short Name" [(ngModel)]="formData.abbreviation"
+                    formControlName="abbrev" required>
+         </mat-form-field>
+         </td>
+       </tr>
+       <tr>
+         <td>
+           <mat-form-field class="example-full-width">
+            <input matInput placeholder="Country" [(ngModel)]="formData.country.name"
+                    formControlName="country" required>
+          <button mat-icon-button color="accent" (click)="addCountry()">
+            <mat-icon class="icon">add</mat-icon>
+          </button>
+          </mat-form-field>
+         </td>
+       </tr>
+       </table>
+     </form>
+<!--     <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner> -->
+   </mat-card-content>
+   <mat-card-actions>
+     <button class="mat-raised-button mat-primary" (click)="update()">Update</button>
+     <button mat-raised-button (click)="close()">Cancel</button>
+   </mat-card-actions>
+ </mat-card>

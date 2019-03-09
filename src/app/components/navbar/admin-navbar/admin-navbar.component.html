@@ -1,0 +1,15 @@
+<button mat-button [matMenuTriggerFor]="adminMenu">
+  <mat-icon>lock_open</mat-icon>
+  <span>Admin</span>
+</button>
+<mat-menu #adminMenu="matMenu">
+  <a mat-menu-item href="" routerLink="/users">
+    <span>Users</span>
+  </a>
+  <a mat-menu-item href="" routerLink="/provinces">
+    <span>State/Provinces</span>
+  </a>
+  <a mat-menu-item href="" routerLink="/locations">
+    <span>Location</span>
+  </a>
+</mat-menu>
