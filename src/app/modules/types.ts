@@ -1,7 +1,8 @@
-export type TCountry = {
+export interface TCountry {
+  id: string;
   name: string;
   shortName: string;
-};
+}
 
 export type TProvince = {
   id: string;

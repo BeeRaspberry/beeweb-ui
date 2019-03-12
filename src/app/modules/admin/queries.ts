@@ -22,7 +22,7 @@ export const COUNTRY_LIST = gql `
 `
 
 export interface CountryAllQueryResponse {
-    countryList: TCountry[];
+    countryList: {edges: TCountry[]};
     pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean,
         startCursor: number, endCursor: number};
     loading: boolean;
@@ -50,6 +50,15 @@ export const PROVINCE_LIST = gql `
       }
     }
   }
+`
+
+export const DELETE_PROVINCE = gql `
+  mutation deleteProvince($id: ID!) {
+    deleteProvince(input:{id: $id})
+  {
+    ok
+  }
+}
 `
 
 export interface ProvinceAllQueryResponse {
@@ -81,6 +90,15 @@ export const LOCATION_LIST = gql `
       }
     }
   }
+`
+
+export const DELETE_LOCATION = gql `
+  mutation deleteLocation($id: ID!) {
+    deleteLocation(input:{id: $id})
+  {
+    ok
+  }
+}
 `
 
 export interface LocationAllQueryResponse {

@@ -38,7 +38,6 @@ export class StateProvinceDialogComponent implements OnInit {
   update() {
 // TODO: Need to send mutation
     this.submitted = true;
-    console.log('dialog update');
 
     if (this.provinceForm.invalid) {
       return;
@@ -48,10 +47,6 @@ export class StateProvinceDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  addCountry(): void {
-    console.log('add country');
   }
 
   close(): void {

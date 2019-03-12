@@ -27,6 +27,7 @@ import { AdminSideNavbarComponent } from './components/navbar/admin-side-navbar/
 import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminModule } from './modules/admin/admin.module';
+import {CountryModule} from './modules/country/country.module';
 
 export function getAuthServiceConfigs() {
   return new AuthServiceConfig(
@@ -74,6 +75,7 @@ export function getAuthServiceConfigs() {
     SocialLoginModule,
     AdminModule,
     AppRoutingModule,
+    CountryModule
   ],
   providers: [
     ErrorDialogService,

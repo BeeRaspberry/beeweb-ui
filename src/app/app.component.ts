@@ -31,7 +31,6 @@ export class AppComponent {
   }
 
   logout() {
-    console.log('logout');
     this.userSessionService.logout()
       .pipe(first())
       .subscribe(

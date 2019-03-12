@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CountryComponent } from './country/country.component';
-//import{ CountryDetailComponent } from '.country-detail/country-detail.component';
-import { StateProvinceListComponent } from './state-province-list/state-province-list.component';
+import { StateProvinceComponent } from './state-province/state-province.component';
 import { LocationComponent } from './location/location.component';
 //import { LoggedInGuard } from '@app/shared/authentication/guards/logged-in-guard';
 import { UserComponent } from '../user/user.component';
@@ -21,7 +20,7 @@ const adminRoutes: Routes = [
   { path: 'locations',
     component: LocationComponent },
   { path: 'provinces',
-    component: StateProvinceListComponent,
+    component: StateProvinceComponent,
 //    canActivate: [LoggedInGuard]
   },
   // Doesn't work

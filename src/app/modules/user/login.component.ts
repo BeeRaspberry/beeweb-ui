@@ -67,9 +67,7 @@ export class LoginComponent implements OnInit {
   socialSignIn(socialPlatform: string) {
     this.submitted = true;
     this.loading = true;
-    console.log('socialSigIn-user');
     const user = this.userSessionService.socialSignIn(socialPlatform);
-    console.log('socialsignin-usersessionservice');
     this.userSessionService.socialLogin()
       .pipe(first())
       .subscribe(

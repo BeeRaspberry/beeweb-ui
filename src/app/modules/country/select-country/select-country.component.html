@@ -1,3 +1,12 @@
-<p>
-  select-country works!
-</p>
+<mat-form-field>
+  <mat-select placeholder="Country" [formControl]="countryControl">
+    <mat-option *ngFor="let country of countryList" [value]="country">
+      {{country.node.name}}
+    </mat-option>
+  </mat-select>
+
+</mat-form-field>
+
+<button mat-icon-button (click)="addCountry()">
+  <mat-icon class="icon">add</mat-icon>
+</button>

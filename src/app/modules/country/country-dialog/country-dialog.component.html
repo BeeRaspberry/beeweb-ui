@@ -1,9 +1,9 @@
-<mat-card class="province-card">
+<mat-card class="country-card">
    <mat-card-header>
-     <mat-card-title>State/Province</mat-card-title>
+     <mat-card-title>Country</mat-card-title>
    </mat-card-header>
    <mat-card-content>
-     <form class="example-form" [formGroup]="provinceForm">
+     <form class="example-form" [formGroup]="form">
        <table class="example-full-width" cellspacing="0">
          <tr>
            <td>
@@ -14,14 +14,9 @@
          </tr>
          <tr>
          <td><mat-form-field class="example-full-width">
-           <input matInput placeholder="Short Name" [(ngModel)]="formData.abbreviation"
+           <input matInput placeholder="Short Name" [(ngModel)]="formData.shortName"
                     formControlName="abbrev" required>
          </mat-form-field>
-         </td>
-       </tr>
-       <tr>
-         <td>
-            <app-select-country></app-select-country>
          </td>
        </tr>
        </table>
@@ -30,7 +25,9 @@
    </mat-card-content>
    <mat-card-actions>
 <!-- TODO: Set up to be Update or Add    -->
-     <button class="mat-raised-button mat-primary" (click)="update()">Update</button>
+     <button class="mat-raised-button mat-primary" (click)="submit()">
+       {{ update_flag ? 'Update' : 'Add' }}
+     </button>
      <button mat-raised-button (click)="close()">Cancel</button>
    </mat-card-actions>
  </mat-card>
