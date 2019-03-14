@@ -47,7 +47,6 @@ export class UserSessionService {
   }
 
   login(email: string, password: string): Observable<any> {
-    console.log(email, password);
     return this.http.post<any>(`${environment.apiUrl}/login`, { email, password })
         .pipe(map(user => {
         // login successful if there's a jwt token in the response
@@ -62,11 +61,8 @@ export class UserSessionService {
 
   socialLogin(): Observable<any> {
     const user = JSON.parse(localStorage.getItem('currentUser'));
-    console.log('sociallogin');
-    console.log(user);
     return this.http.post<any>(`${environment.apiUrl}/sociallogin`, { user })
         .pipe(map(userData => {
-          console.log(userData);
         // login successful if there's a jwt token in the response
           if (userData && userData.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -104,14 +100,12 @@ export class UserSessionService {
     const userData = JSON.parse(localStorage.getItem('currentUser'));
     if (userData['provider']) {
       this.socialAuthService.signOut().then(data => {
-        console.log(data);
       });
     }
     return this.http.post<any>(`${environment.apiUrl}/logout`, { userData })
         .pipe(map(user => {
           localStorage.setItem('currentUser', '');
           localStorage.clear();
-          console.log(user);
         }));
     }
 }

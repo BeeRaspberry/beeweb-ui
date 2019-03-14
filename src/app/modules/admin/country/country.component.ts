@@ -45,7 +45,6 @@ export class CountryComponent implements OnInit {
     this.apollo.watchQuery<CountryAllQueryResponse>({
       query: COUNTRY_LIST})
       .valueChanges.subscribe((response) => {
-        console.log('get countries');
         this.countryList = response.data.countryList.edges;
         this.loading = response.data.loading;
     });

@@ -70,7 +70,6 @@ export class StateProvinceComponent implements OnInit {
     const dialogRef = this.dialog.open(StateProvinceDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('result');
     });
   }
 
