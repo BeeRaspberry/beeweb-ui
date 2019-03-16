@@ -10,7 +10,6 @@ import { LocationListComponent } from './location-list/location-list.component';
 import { CustomMaterialModule } from '../../material.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { CountryModule } from '../country/country.module';
-import {ErrorDialogComponent} from '../../dialogs/error-dialog/error-dialog.component';
 
 @NgModule({
   declarations: [

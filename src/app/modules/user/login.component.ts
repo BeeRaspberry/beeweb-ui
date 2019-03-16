@@ -1,12 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialogRef } from '@angular/material/dialog';
 import {Injectable} from '@angular/core';
 import {FormBuilder, FormControl, Validators, FormGroup} from "@angular/forms";
 import {first} from 'rxjs/operators';
 import { UserSessionService } from '../../shared/authentication/services/user-session.service';
 import { ErrorDialogService } from '../../dialogs/error-dialog/error-dialog.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginModalService } from '../../shared/authentication/services/login-modal.service';
 import {Subscription} from 'rxjs/Subscription';
 import {LoginState} from '../../shared/authentication/login-state.interface';

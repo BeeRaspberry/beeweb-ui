@@ -47,8 +47,6 @@ import {
 
 import {CdkTableModule} from '@angular/cdk/table';
 
-import {DomSanitizer} from '@angular/platform-browser';
-
 @NgModule({
   exports: [
     A11yModule,

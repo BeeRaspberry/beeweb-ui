@@ -1,5 +1,9 @@
 # BeewebUi
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c0abee47f9f9413ba7356af7350184e3)](https://www.codacy.com/app/erikdeirdre/beeweb-ui?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BeeRaspberry/beeweb-ui&amp;utm_campaign=Badge_Grade)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/BeeRaspberry/beeweb-ui.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/BeeRaspberry/beeweb-ui/alerts/)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/BeeRaspberry/beeweb-ui.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/BeeRaspberry/beeweb-ui/context:javascript)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.6.
 
 ## Development server
