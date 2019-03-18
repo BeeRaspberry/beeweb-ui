@@ -10,7 +10,7 @@ const appRoutes: Routes = [
   { path: 'about', component: AboutComponent},
   {
     path: 'admin',
-    loadChildren: './ modules/admin/admin.module#AdminModule'
+    loadChildren: './modules/admin/admin.module#AdminModule'
 //    canActivateChild: [AuthGuard]
   },
 ];
@@ -19,5 +19,6 @@ const appRoutes: Routes = [
   imports: [RouterModule.forRoot(appRoutes, {enableTracing: false})],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
 

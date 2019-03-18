@@ -1,0 +1,19 @@
+<mat-card class="upload-card">
+   <mat-card-header>
+     <mat-card-title>Upload Hive Data</mat-card-title>
+   </mat-card-header>
+   <mat-card-content>
+     <form class="example-form" [formGroup]="uploadForm">
+  <div class="form-group">
+    <input type="file" #file class="form-control-file" id="uploadFile" (change)="onFilesAdded()" multiple>
+  </div>
+     </form>
+<!--     <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner> -->
+   </mat-card-content>
+   <mat-card-actions>
+     <button mat-raised-button (click)="upload()" color="primary">
+        <span class="label">Upload</span>
+      </button>
+     <button mat-raised-button (click)="close()">Cancel</button>
+   </mat-card-actions>
+</mat-card>

@@ -14,7 +14,7 @@ const adminRoutes: Routes = [
  //   canActivate: [LoggedInGuard]
   },
 //  { path: 'country/:id',
-//    component: CountryDetailComponent,
+//    components: CountryDetailComponent,
 //    data: { animation: 'country' }
 //  },
   { path: 'locations',
@@ -24,9 +24,9 @@ const adminRoutes: Routes = [
 //    canActivate: [LoggedInGuard]
   },
   // Doesn't work
- //     { path: 'users', component: UserComponent },
+ //     { path: 'users', components: UserComponent },
 //  { path: 'province/:id',
-//    component: StateProvinceDetailComponent,
+//    components: StateProvinceDetailComponent,
 //    data: { animation: 'country' }
 //   },
 ];

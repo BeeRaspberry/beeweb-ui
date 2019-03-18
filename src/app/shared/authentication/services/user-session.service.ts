@@ -42,17 +42,28 @@ export class UserSessionService {
   getUserName(): string {
     const temp = localStorage.getItem('currentUser');
     const userName = JSON.parse(localStorage.getItem('currentUser'));
+    let firstname = '';
+    let lastname = '';
     if ('name' in userName) { return userName['name']};
-    return userName['first_name'] + ' ' + userName['last_name'];
+    if ('first_name' in userName) { firstname = userName['first_name'] };
+    if ('last_name' in userName) { lastname = userName['last_name'] };
+    const full_name = firstname + ' ' + lastname;
+    if (full_name === ' ') {
+      return 'Unknown Name';
+    } else {
+      return userName['first_name'] + ' ' + userName['last_name'];
+    }
   }
 
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/login`, { email, password })
         .pipe(map(user => {
         // login successful if there's a jwt token in the response
-          if (user && user.token) {
+//          if (user && user.token) {
+          if (user) {
+            console.log(JSON.stringify(user.response));
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('currentUser', JSON.stringify(user.response));
             this.currentUserSubject.next(user);
           }
           return user;

@@ -3,6 +3,8 @@ import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ErrorDialogService } from '../../../dialogs/error-dialog/error-dialog.service';
 import { UserSessionService } from '../../../shared/authentication/services/user-session.service';
+import {UploadDialogComponent} from '../../../modules/upload/components/upload-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-loggedin-navbar',
@@ -16,11 +18,20 @@ export class LoggedinNavbarComponent implements OnInit {
   constructor(
     private router: Router,
     private errorDialogService: ErrorDialogService,
-    public userSessionService: UserSessionService
+    public userSessionService: UserSessionService,
+    public dialog: MatDialog
   ) {
   }
 
   ngOnInit() {
+  }
+
+  openUpload() {
+    const dialogRef = this.dialog.open(UploadDialogComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   logout() {

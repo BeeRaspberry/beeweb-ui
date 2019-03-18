@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
     public dialogRef: MatDialogRef<LoginComponent>,
   ) {
     this.loginForm = fb.group({
-      email: new FormControl(['', Validators.required]),
-      password: new FormControl(['', Validators.required])
+      email: new FormControl('', [Validators.email, Validators.required]),
+      password: new FormControl('',[Validators.required])
     });
   }
 

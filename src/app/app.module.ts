@@ -28,6 +28,8 @@ import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminModule } from './modules/admin/admin.module';
 import {CountryModule} from './modules/country/country.module';
+import { UploadDialogComponent } from './modules/upload/components/upload-dialog.component';
+import {UploadModule} from './modules/upload/upload.module';
 
 export function getAuthServiceConfigs() {
   return new AuthServiceConfig(
@@ -74,6 +76,7 @@ export function getAuthServiceConfigs() {
     CustomMaterialModule,
     SocialLoginModule,
     AdminModule,
+    UploadModule,
     AppRoutingModule,
     CountryModule
   ],

@@ -10,16 +10,18 @@ import { LoginComponent } from '../../../modules/user/login.component';
 export class LoginNavbarComponent implements OnInit {
 
   constructor(
-    public dialog: MatDialog) {}
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
   }
 
-  openDialog(): void {
+  openLogin(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
     });
 
     dialogRef.afterClosed().subscribe(result => {
     });
   }
+
 }
