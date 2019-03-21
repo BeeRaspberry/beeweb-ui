@@ -30,21 +30,22 @@ import { AdminModule } from './modules/admin/admin.module';
 import {CountryModule} from './modules/country/country.module';
 import { UploadDialogComponent } from './modules/upload/components/upload-dialog.component';
 import {UploadModule} from './modules/upload/upload.module';
+import {environment} from '../environments/environment.prod';
 
 export function getAuthServiceConfigs() {
   return new AuthServiceConfig(
       [
         {
           id: FacebookLoginProvider.PROVIDER_ID,
-          provider: new FacebookLoginProvider("Your-Facebook-app-id")
+          provider: new FacebookLoginProvider(`${environment.facebookApi}`)
         },
         {
           id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('930191446877-csirm9eu8qb4ghtpf03htn9k0hbqfvuk.apps.googleusercontent.com')
+          provider: new GoogleLoginProvider(`${environment.googleApi}`)
         },
         {
           id: LinkedinLoginProvider.PROVIDER_ID,
-          provider: new LinkedinLoginProvider('1098828800522-m2ig6bieilc3tpqvmlcpdvrpvn86q4ks.apps.googleusercontent.com')
+          provider: new LinkedinLoginProvider(`${environment.linkedInApi}`)
         },
       ]
   );
