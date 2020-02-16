@@ -10,7 +10,7 @@ const appRoutes: Routes = [
   { path: 'about', component: AboutComponent},
   {
     path: 'admin',
-    loadChildren: './modules/admin/admin.module#AdminModule'
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
 //    canActivateChild: [AuthGuard]
   },
 ];
