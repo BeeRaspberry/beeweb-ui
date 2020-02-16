@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import {AuthService, FacebookLoginProvider, GoogleLoginProvider,
-  LinkedinLoginProvider} from 'angular-6-social-login';
+import {AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { map } from 'rxjs/operators';
 import { User } from '../../../models';
 import {environment} from '../../../../environments/environment';
@@ -81,8 +80,8 @@ export class UserSessionService {
       socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
     } else if (socialPlatform === 'google') {
       socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
-    } else if (socialPlatform === 'linkedin') {
-      socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
+//    } else if (socialPlatform === 'linkedin') {
+//      socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
     }
 
     this.socialAuthService.signIn(socialPlatformProvider).then(

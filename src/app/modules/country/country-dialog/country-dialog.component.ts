@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TCountry } from '../../types';
 import { CREATE_COUNTRY, UPDATE_COUNTRY } from '../queries';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ErrorDialogService } from '../../../dialogs/error-dialog/error-dialog.service';
 import { UserSessionService } from '../../../shared/authentication/services/user-session.service';

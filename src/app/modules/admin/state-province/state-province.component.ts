@@ -4,7 +4,7 @@ import { Apollo } from 'apollo-angular';
 import { PROVINCE_LIST, DELETE_PROVINCE, ProvinceAllQueryResponse } from '../queries';
 import { TProvince} from '../../types';
 import { FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { StateProvinceDialogComponent } from '../state-province-dialog/state-province-dialog.component';
 
 @Component({

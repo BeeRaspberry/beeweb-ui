@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { COUNTRY_LIST, CountryAllQueryResponse } from '../queries';
 import { TCountry } from '../../types';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CountryDialogComponent } from '../country-dialog/country-dialog.component';
 
 @Component({

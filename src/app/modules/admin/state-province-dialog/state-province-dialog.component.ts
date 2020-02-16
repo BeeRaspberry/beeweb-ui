@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ErrorDialogService} from '../../../dialogs/error-dialog/error-dialog.service';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TProvince } from '../../types';
 
 @Component({

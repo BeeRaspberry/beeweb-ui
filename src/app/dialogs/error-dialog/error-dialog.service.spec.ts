@@ -1,5 +1,5 @@
 import { ErrorDialogService } from './error-dialog.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { TestBed } from '@angular/core/testing';
 
 describe('ErrorDialogService', () => {

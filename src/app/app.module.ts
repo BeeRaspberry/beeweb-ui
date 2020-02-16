@@ -14,7 +14,7 @@ import { CustomMaterialModule } from './material.module';
 import { LoginComponent } from './modules/user/login.component';
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider,
-  LinkedinLoginProvider, SocialLoginModule } from 'angular-6-social-login';
+  SocialLoginModule } from 'angularx-social-login';
 import { ErrorDialogService } from './dialogs/error-dialog/error-dialog.service';
 import { ErrorDialogComponent } from './dialogs/error-dialog/error-dialog.component';
 import { MainNavbarComponent } from './components/navbar/main-navbar/main-navbar.component';
@@ -40,10 +40,10 @@ export function getAuthServiceConfigs() {
           id: GoogleLoginProvider.PROVIDER_ID,
           provider: new GoogleLoginProvider('930191446877-csirm9eu8qb4ghtpf03htn9k0hbqfvuk.apps.googleusercontent.com')
         },
-        {
-          id: LinkedinLoginProvider.PROVIDER_ID,
-          provider: new LinkedinLoginProvider('1098828800522-m2ig6bieilc3tpqvmlcpdvrpvn86q4ks.apps.googleusercontent.com')
-        },
+//        {
+//          id: LinkedinLoginProvider.PROVIDER_ID,
+//          provider: new LinkedinLoginProvider('1098828800522-m2ig6bieilc3tpqvmlcpdvrpvn86q4ks.apps.googleusercontent.com')
+//        },
       ]
   );
 }

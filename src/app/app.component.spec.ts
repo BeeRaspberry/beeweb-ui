@@ -1,7 +1,9 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import {MaterialModule} from './material.module';
-import {MatButtonModule, MatDialogModule, MatIconModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './modules/user/login.component';
 import {ErrorDialogComponent} from './dialogs/error-dialog/error-dialog.component';
