@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import {TCountry} from '../types';
+import {ICountry} from '../interfaces';
 
 export const COUNTRY_LIST = gql `
   query CountryList {
@@ -52,7 +52,7 @@ export const DELETE_COUNTRY = gql `
 `
 
 export interface CountryAllQueryResponse {
-    countryList: { edges: TCountry[] };
+    countryList: { edges: ICountry[] };
     pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean,
         startCursor: number, endCursor: number};
     loading: boolean;

@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ErrorDialogService} from '../../../dialogs/error-dialog/error-dialog.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TProvince } from '../../types';
+import { IProvince } from '../../interfaces';
 
 @Component({
   selector: 'app-state-province-dialog',
@@ -14,7 +14,7 @@ export class StateProvinceDialogComponent implements OnInit {
   provinceForm: FormGroup;
   loading = false;
   submitted = false;
-  formData: TProvince;
+  formData: IProvince;
   showProvinceModal = false;
 
   constructor(

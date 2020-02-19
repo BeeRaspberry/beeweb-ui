@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { COUNTRY_LIST, CountryAllQueryResponse } from '../queries';
-import { TCountry } from '../../types';
+import { ICountry } from '../../interfaces';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CountryDialogComponent } from '../country-dialog/country-dialog.component';
 
@@ -12,7 +12,7 @@ import { CountryDialogComponent } from '../country-dialog/country-dialog.compone
   styleUrls: ['./select-country.component.css']
 })
 export class SelectCountryComponent implements OnInit {
-  countryList: TCountry[] = [];
+  countryList: ICountry[] = [];
   private loading = false;
   countryForm: FormGroup;
   countryControl = new FormControl([''])

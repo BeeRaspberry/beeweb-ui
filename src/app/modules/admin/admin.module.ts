@@ -11,6 +11,9 @@ import { CustomMaterialModule } from '../../material.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { CountryModule } from '../country/country.module';
 import {ErrorDialogComponent} from '../../dialogs/error-dialog/error-dialog.component';
+import { UserComponent } from './user/user.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import {ErrorDialogComponent} from '../../dialogs/error-dialog/error-dialog.comp
     LocationDialogComponent,
     CountryComponent,
     StateProvinceDialogComponent,
-    LocationListComponent
+    LocationListComponent,
+    UserComponent,
+    UserListComponent,
+    UserDialogComponent
   ],
   imports: [
     CommonModule,

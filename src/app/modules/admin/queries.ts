@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { TCountry, TProvince, TLocation } from '../types';
+import { ICountry, IProvince, ILocation, IUser } from '../interfaces';
 
 export const COUNTRY_LIST = gql `
   query CountryList {
@@ -22,7 +22,7 @@ export const COUNTRY_LIST = gql `
 `
 
 export interface CountryAllQueryResponse {
-    countryList: {edges: TCountry[]};
+    countryList: {edges: ICountry[]};
     pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean,
         startCursor: number, endCursor: number};
     loading: boolean;
@@ -62,7 +62,7 @@ export const DELETE_PROVINCE = gql `
 `
 
 export interface ProvinceAllQueryResponse {
-    stateProvinceList: {edges: TProvince[]};
+    stateProvinceList: {edges: IProvince[]};
     pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean,
         startCursor: number, endCursor: number};
     loading: boolean;
@@ -102,7 +102,7 @@ export const DELETE_LOCATION = gql `
 `
 
 export interface LocationAllQueryResponse {
-    locationList: TLocation[];
+    locationList: ILocation[];
     pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean,
         startCursor: number, endCursor: number};
     loading: boolean;

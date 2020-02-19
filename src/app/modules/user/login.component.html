@@ -8,7 +8,7 @@
          <tr>
            <td>
              <mat-form-field class="example-full-width">
-             <input matInput placeholder="Email" formControlName="email" required>
+             <input matInput placeholder="Email" [formControl]="loginForm.controls['emailFormControl']">
 
              </mat-form-field>
            </td>
@@ -16,7 +16,7 @@
          <tr>
          <td><mat-form-field class="example-full-width">
            <input matInput placeholder="Password" type="password"
-                    formControlName="password" required>
+                    [formControl]="loginForm.controls['passwordFormControl']">
 
          </mat-form-field></td>
        </tr></table>
@@ -43,8 +43,8 @@
         <span>Google</span>
       </button>
       &nbsp;&nbsp;&nbsp;
-      <button mat-raised-button flex="100" color="primary" style="font-size:18px;" (click)="socialSignIn('linkedin')">
+<!--      <button mat-raised-button flex="100" color="primary" style="font-size:18px;" (click)="socialSignIn('linkedin')">
         <span>LinkedIn</span>
-      </button>
+      </button> -->
     </div>
  </mat-card>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { COUNTRY_LIST, CountryAllQueryResponse } from '../queries';
-import { TCountry } from '../../types';
+import { ICountry } from '../../interfaces';
 import { FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CountryDialogComponent } from '../../country/country-dialog/country-dialog.component';
@@ -15,7 +15,7 @@ import { DELETE_COUNTRY } from '../../country/queries';
 
 export class CountryComponent implements OnInit {
   selectedIds: string[] = [];
-  countryList: TCountry[] = [];
+  countryList: ICountry[] = [];
   displayedColumns: string[] = ['check', 'name', 'abbreviation'];
   loading = true;
   form: FormGroup;
@@ -50,7 +50,7 @@ export class CountryComponent implements OnInit {
     });
   }
 
-  selectCountry(country: TCountry): void {
+  selectCountry(country: ICountry): void {
     this.openDialog(country);
   }
 
@@ -58,7 +58,7 @@ export class CountryComponent implements OnInit {
    this.openDialog({id: '', name: '', shortName: ''});
   }
 
-  openDialog(country: TCountry) {
+  openDialog(country: ICountry) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.position = {

@@ -5,7 +5,7 @@ import { CountryComponent } from './country/country.component';
 import { StateProvinceComponent } from './state-province/state-province.component';
 import { LocationComponent } from './location/location.component';
 //import { LoggedInGuard } from '@app/shared/authentication/guards/logged-in-guard';
-import { UserComponent } from '../user/user.component';
+import { UserComponent } from './user/user.component';
 import {StateProvinceDialogComponent} from './state-province-dialog/state-province-dialog.component';
 
 const adminRoutes: Routes = [
@@ -23,12 +23,11 @@ const adminRoutes: Routes = [
     component: StateProvinceComponent,
 //    canActivate: [LoggedInGuard]
   },
-  // Doesn't work
- //     { path: 'users', component: UserComponent },
+  { path: 'users', component: UserComponent },
 //  { path: 'province/:id',
 //    component: StateProvinceDetailComponent,
 //    data: { animation: 'country' }
-//   },
+//  },
 ];
 
 @NgModule({

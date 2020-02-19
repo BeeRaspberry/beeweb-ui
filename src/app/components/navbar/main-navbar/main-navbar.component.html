@@ -32,6 +32,7 @@
      </div>
      <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+          <app-admin-navbar></app-admin-navbar>
           <app-loggedin-navbar *ngIf="userSessionService.getLoggedIn()"></app-loggedin-navbar>
           <app-login-navbar *ngIf="!userSessionService.getLoggedIn()"></app-login-navbar>
         </ul>

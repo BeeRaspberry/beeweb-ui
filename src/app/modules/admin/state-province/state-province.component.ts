@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { PROVINCE_LIST, DELETE_PROVINCE, ProvinceAllQueryResponse } from '../queries';
-import { TProvince} from '../../types';
+import { IProvince} from '../../interfaces';
 import { FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { StateProvinceDialogComponent } from '../state-province-dialog/state-province-dialog.component';
@@ -15,7 +15,7 @@ import { StateProvinceDialogComponent } from '../state-province-dialog/state-pro
 
 export class StateProvinceComponent implements OnInit {
   selectedIds: string[] = [];
-  provinceList: TProvince[] = [];
+  provinceList: IProvince[] = [];
   displayedColumns: string[] = ['check', 'name', 'abbreviation', 'country'];
   loading = true;
   form: FormGroup;
@@ -50,7 +50,7 @@ export class StateProvinceComponent implements OnInit {
     });
   }
 
-  selectProvince(province: TProvince): void {
+  selectProvince(province: IProvince): void {
     this.openDialog(province);
   }
 
@@ -58,7 +58,7 @@ export class StateProvinceComponent implements OnInit {
     this.openDialog({id: '', name: '', abbreviation: '', country: {id: '', name: '', shortName: ''}});
   }
 
-  openDialog(province: TProvince): void {
+  openDialog(province: IProvince): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.position = {
