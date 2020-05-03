@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
   }
 
   selectUser(user: IUser): void {
-    console.log(user)
+    console.log(user);
     this.openDialog(user);
   }
 

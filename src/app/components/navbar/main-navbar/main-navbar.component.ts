@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['../navbar.component.css']
 })
 export class MainNavbarComponent implements OnInit {
-  returnUrl: string = '/';
+  returnUrl = '/';
   loading = false;
 
   constructor(

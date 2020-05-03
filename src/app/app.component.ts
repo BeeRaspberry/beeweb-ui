@@ -13,7 +13,7 @@ import {first} from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'beeweb-ui';
-  returnUrl: string = '/';
+  returnUrl = '/';
   loading = false;
 
   constructor(

@@ -41,7 +41,7 @@ export class UserSessionService {
   getUserName(): string {
     const temp = localStorage.getItem('currentUser');
     const userName = JSON.parse(localStorage.getItem('currentUser'));
-    if ('name' in userName) { return userName['name']};
+    if ('name' in userName) { return userName['name'] };
     return userName['first_name'] + ' ' + userName['last_name'];
   }
 

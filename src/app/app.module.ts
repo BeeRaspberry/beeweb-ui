@@ -1,14 +1,14 @@
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-//import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
 import { CustomMaterialModule } from './material.module';
 import { LoginComponent } from './modules/user/login.component';
@@ -35,7 +35,7 @@ export function getAuthServiceConfigs() {
       [
         {
           id: FacebookLoginProvider.PROVIDER_ID,
-          provider: new FacebookLoginProvider("Your-Facebook-app-id")
+          provider: new FacebookLoginProvider('Your-Facebook-app-id')
         },
         {
           id: GoogleLoginProvider.PROVIDER_ID,
