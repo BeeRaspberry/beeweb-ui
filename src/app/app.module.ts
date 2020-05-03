@@ -28,6 +28,7 @@ import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminModule } from './modules/admin/admin.module';
 import {CountryModule} from './modules/country/country.module';
+import { environment } from 'src/environments/environment';
 
 export function getAuthServiceConfigs() {
   return new AuthServiceConfig(
@@ -38,11 +39,11 @@ export function getAuthServiceConfigs() {
         },
         {
           id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('930191446877-csirm9eu8qb4ghtpf03htn9k0hbqfvuk.apps.googleusercontent.com')
+          provider: new GoogleLoginProvider('.apps.googleusercontent.com')
         },
 //        {
 //          id: LinkedinLoginProvider.PROVIDER_ID,
-//          provider: new LinkedinLoginProvider('1098828800522-m2ig6bieilc3tpqvmlcpdvrpvn86q4ks.apps.googleusercontent.com')
+//          provider: new LinkedinLoginProvider('.apps.googleusercontent.com')
 //        },
       ]
   );
@@ -91,7 +92,7 @@ export class AppModule {
     httpLink: HttpLink
   ) {
       apollo.create({
-        link: httpLink.create({uri: 'http://localhost:5000/graphql'}),
+        link: httpLink.create({uri: environment.apiUrl + '/graphql'}),
         cache: new InMemoryCache()
       });
   }
