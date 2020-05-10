@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import {AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { map } from 'rxjs/operators';
 import { User } from '../../../models';
-import {environment} from '../../../../environments/environment';
+import { environment } from '../../../../assets/env';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class UserSessionService {
 
   constructor(
     private http: HttpClient,
-    private socialAuthService: AuthService
+    private socialAuthService: AuthService,
   ) {
     this.currentUserSubject = new BehaviorSubject<User>(localStorage.currentUser);
     this.currentUser = this.currentUserSubject.asObservable();

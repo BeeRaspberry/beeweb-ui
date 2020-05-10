@@ -1,5 +1,5 @@
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Inject } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -27,8 +27,8 @@ import { AdminSideNavbarComponent } from './components/navbar/admin-side-navbar/
 import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminModule } from './modules/admin/admin.module';
-import {CountryModule} from './modules/country/country.module';
-import { environment } from 'src/environments/environment';
+import { CountryModule } from './modules/country/country.module';
+import { environment } from '../assets/env';
 
 export function getAuthServiceConfigs() {
   return new AuthServiceConfig(

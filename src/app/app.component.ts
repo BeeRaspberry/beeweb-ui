@@ -12,7 +12,7 @@ import {first} from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'beeweb-ui';
+  title = 'Bee UI';
   returnUrl = '/';
   loading = false;
 
