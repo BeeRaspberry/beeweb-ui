@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { map } from 'rxjs/operators';
 import { User } from '../../../models';
-import { environment } from '../../../../assets/env';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

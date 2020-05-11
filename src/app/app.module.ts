@@ -28,8 +28,6 @@ import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminModule } from './modules/admin/admin.module';
 import { CountryModule } from './modules/country/country.module';
-import { EnvServiceProvider } from './shared/env-service/env.service.provider';
-import { EnvService } from './shared/env-service/env.service';
 import { environment } from 'src/environments/environment';
 
 export function getAuthServiceConfigs() {
@@ -82,7 +80,6 @@ export function getAuthServiceConfigs() {
   ],
   providers: [
     ErrorDialogService,
-    EnvServiceProvider,
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
     { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs },
   ],
@@ -92,11 +89,10 @@ export function getAuthServiceConfigs() {
 export class AppModule {
   constructor(
     apollo: Apollo,
-    httpLink: HttpLink,
-    private env: EnvService,
+    httpLink: HttpLink
   ) {
       apollo.create({
-        link: httpLink.create({uri: env.apiUrl + '/graphql'}),
+        link: httpLink.create({uri: environment.apiUrl + '/graphql'}),
         cache: new InMemoryCache()
       });
   }

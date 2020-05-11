@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
-  backendApiUrl: 'http:llocalhost',
-  debug: false
+  production: false,
+  apiUrl: window["env"]["apiUrl"] || "default",
+  debug: window["env"]["debug"] || false
 };
