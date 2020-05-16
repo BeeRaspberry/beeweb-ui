@@ -6,6 +6,5 @@ hooks
 .editorconfig
 .gitignore
 .idea
-VERSION
 README.md
 LICENSE

@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginComponent } from './login.component';
-import {AuthServiceConfig, SocialLoginModule} from 'angular-6-social-login';
+import { AuthServiceConfig, SocialLoginModule } from 'angular-6-social-login';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

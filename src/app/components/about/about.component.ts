@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { AppConfigService } from '../../core/services/app-config.service';
 
 @Component({
   selector: 'app-about',
@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() {
-    console.log('Api: ' + environment.apiUrl);
+  constructor( private config: AppConfigService) {
+    console.log('about: ' + this.config.getApiURL());
    }
 
   ngOnInit() {

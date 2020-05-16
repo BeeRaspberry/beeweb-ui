@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: window["env"]["apiUrl"] || "http://localhost:5000",
-  debug: window["env"]["debug"] || false
+  apiUrl: 'http://localhost:5000',
+  environment: 'Development',
+  debug: false
 };

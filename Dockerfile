@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json /app/
 
 #COPY angular.json package.json tsconfig.json tslint.json package-lock.json /app/
-RUN npm install @angular/cli@7.0.3 -g
+RUN npm install @angular/cli@9.1.4 -g
 
 RUN npm install
 
@@ -26,4 +26,4 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 
 #ENTRYPOINT [ "sh", "/app/entrypoint.sh" ]
-CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
+CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/config/config.template.json > /usr/share/nginx/html/assets/config/config.json && exec nginx -g 'daemon off;'"]

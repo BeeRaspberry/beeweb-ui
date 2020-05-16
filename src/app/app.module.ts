@@ -1,10 +1,12 @@
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
-import { NgModule, Inject } from '@angular/core';
+import { NgModule, Injector, APP_INITIALIZER } from '@angular/core';
+
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
+import { HttpClient } from '@angular/common/http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,7 +30,13 @@ import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminModule } from './modules/admin/admin.module';
 import { CountryModule } from './modules/country/country.module';
-import { environment } from 'src/environments/environment';
+import { AppConfigService } from './core/services/app-config.service';
+import { GraphQLModule } from './modules/graphql/graphql.module';
+import { AppInjector } from './core/services/app-injector.service';
+
+export function getAppConfig(appConfig: AppConfigService) {
+  return () => appConfig.loadConfig();
+}
 
 export function getAuthServiceConfigs() {
   return new AuthServiceConfig(
@@ -76,24 +84,30 @@ export function getAuthServiceConfigs() {
     SocialLoginModule,
     AdminModule,
     AppRoutingModule,
-    CountryModule
+    CountryModule,
+    GraphQLModule
   ],
   providers: [
     ErrorDialogService,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
-    { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs },
+    { provide: HTTP_INTERCEPTORS,
+      useClass: HttpConfigInterceptor, 
+      multi: true 
+    },
+    { provide: AuthServiceConfig, 
+      useFactory: getAuthServiceConfigs 
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: getAppConfig,
+      deps: [AppConfigService],
+      multi: true
+    }
   ],
   entryComponents: [ErrorDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink
-  ) {
-      apollo.create({
-        link: httpLink.create({uri: environment.apiUrl + '/graphql'}),
-        cache: new InMemoryCache()
-      });
+  constructor(injector: Injector) {
+    AppInjector.setInjector(injector);
   }
 }
