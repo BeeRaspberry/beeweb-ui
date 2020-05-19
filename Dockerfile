@@ -22,6 +22,7 @@ COPY ./nginx-template.conf ./nginx-template.conf
 #COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 #WORKDIR /app
 COPY entrypoint.sh ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
 
 EXPOSE 80
 
