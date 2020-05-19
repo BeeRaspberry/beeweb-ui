@@ -15,14 +15,12 @@ export class AppConfigService {
       .toPromise()
       .then((data: any) => {
         this.config = data;
-        console.log(JSON.stringify(data));
       })
       .catch((err: any) => {
         console.error(err);
       });
   }
   getApiURL(): string {
-    console.log('Get API URL: ' + this.config.apiUrl);
     return this.config.apiUrl + '/graphql';
   }
 }

@@ -1,7 +1,38 @@
+set -x
 echo "Replace Template settings"
 
-[[ -z $PRODUCTION ]] && export PRODUCTION="true"
-[[ -z $DEBUG ]] && export DEBUG="false"
-[[ -z $API_URL ]] && echo "EXITING ... API_URL variable not set"; exit 6
+if test -z "$PRODUCTION"; then
+  PRODUCTION="true"
+fi
+export PRODUCTION=$PRODUCTION
 
-envsubst < /usr/share/nginx/html/assets/env.template.json > /usr/share/nginx/html/assets/env.jspn
+if test -z "$DEBUG"; then
+  DEBUG="false"
+fi
+
+if test -z "$PORT"; then
+  PORT="80"
+fi
+export PORT=$PORT
+
+if test -z "$DOMAIN_NAME"; then
+  DOMAIN_NAME="localhost"
+fi
+export DOMAIN_NAME=$DOMAIN_NAME
+
+if test -z "$SERVICE_NAME"; then
+  echo "EXITING ... SERVICE_NAME variable not set"
+  exit 6
+fi
+
+export DEBUG
+export SERVICE_NAME=$SERVICE_NAME
+
+REPLACE_VARS='$SERVICE_NAME:$DOMAIN_NAME:$PORT'
+
+echo "Replace VARS"
+envsubst '${SERVICE_NAME},${DOMAIN_NAME},${PORT}' < ./nginx-template.conf > /etc/nginx/conf.d/default.conf
+
+cat /etc/nginx/conf.d/default.conf
+
+echo "entrypoint done"

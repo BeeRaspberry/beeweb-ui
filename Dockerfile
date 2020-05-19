@@ -18,12 +18,14 @@ FROM nginx:1.18.0-alpine
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/dist/beeweb-ui/ /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-
+COPY ./nginx-template.conf ./nginx-template.conf
+#COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 #WORKDIR /app
-#COPY entrypoint.sh /app/.
+COPY entrypoint.sh ./entrypoint.sh
 
 EXPOSE 80
 
 #ENTRYPOINT [ "sh", "/app/entrypoint.sh" ]
-CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/config/config.template.json > /usr/share/nginx/html/assets/config/config.json && exec nginx -g 'daemon off;'"]
+CMD ["/bin/sh",  "-c",  "./entrypoint.sh && exec nginx -g 'daemon off;'"]
+
+#CMD ["/bin/sh",  "-c",  "export API_URL='${API_URL}'; envsubst '$API_URL' < ./nginx-template.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]

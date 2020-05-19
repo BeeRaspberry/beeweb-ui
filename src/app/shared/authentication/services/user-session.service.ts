@@ -4,11 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { map } from 'rxjs/operators';
 import { User } from '../../../models';
-import { environment } from 'src/environments/environment';
+import { AppConfigService } from '../../../core/services/app-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserSessionService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
@@ -17,6 +18,7 @@ export class UserSessionService {
   constructor(
     private http: HttpClient,
     private socialAuthService: AuthService,
+    private configService: AppConfigService
   ) {
     this.currentUserSubject = new BehaviorSubject<User>(localStorage.currentUser);
     this.currentUser = this.currentUserSubject.asObservable();
@@ -46,7 +48,7 @@ export class UserSessionService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/login`, { email, password })
+    return this.http.post<any>(`${this.configService.getApiURL()}/login`, { email, password })
         .pipe(map(user => {
         // login successful if there's a jwt token in the response
           if (user && user.token) {
@@ -60,7 +62,7 @@ export class UserSessionService {
 
   socialLogin(): Observable<any> {
     const user = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.post<any>(`${environment.apiUrl}/sociallogin`, { user })
+    return this.http.post<any>(`${this.configService.getApiURL()}/sociallogin`, { user })
         .pipe(map(userData => {
         // login successful if there's a jwt token in the response
           if (userData && userData.token) {
@@ -101,7 +103,7 @@ export class UserSessionService {
       this.socialAuthService.signOut().then(data => {
       });
     }
-    return this.http.post<any>(`${environment.apiUrl}/logout`, { userData })
+    return this.http.post<any>(`${this.configService.getApiURL()}/logout`, { userData })
         .pipe(map(user => {
           localStorage.setItem('currentUser', '');
           localStorage.clear();
