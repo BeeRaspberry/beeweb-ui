@@ -1,0 +1,58 @@
+name: build
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 0
+
+    - name: Configure Job
+      run: |
+        git config user.name "$GITHUB_ACTOR"
+        git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        echo ::set-env name=VERSION_CHANGE::0
+
+# Following logic updates the value in VERSION automatically, on 'master'
+# Assume since the developer didn't change the version then this is a minor change.
+# Increment by one, and set patch to 0. 
+    - name: Increment Version - if same as prior commit
+      if: github.ref == 'refs/heads/master'
+      run: |
+        DIFF=$(git diff HEAD^ HEAD VERSION)
+        if [[ -z "$DIFF" ]]; then
+          IFS='.'; read -r -a array <<< "$(cat VERSION)"
+          CNT="${array[1]}"
+          ((CNT++))
+          echo "${array[0]}.${CNT}.0" >VERSION
+          echo ::set-env name=VERSION_CHANGE::1
+        fi
+
+    - name: Commit Updated Version File
+      if: env.VERSION_CHANGE == 1 && github.ref == 'refs/heads/master' 
+      run: |
+        git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        git config --local user.name ${GITHUB_ACTOR}
+        git add VERSION
+        git commit -m "Updated VERSION file"
+  
+    - name: Push changes to master
+      if: env.VERSION_CHANGE == 1 && github.ref == 'refs/heads/master'
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        force: true
+
+    - name: Notify Helm Chart Repo of the Commit
+      run: |
+        API_VERSION=$(cat VERSION)
+        curl -X POST https://api.github.com/repos/BeeRaspberry/helm-charts/dispatches \
+        -H 'Accept: application/vnd.github.everest-preview+json' \
+        -H 'Content-Type: application/json' \
+        -u ${{ secrets.ACCESS_TOKEN_REPO }} \
+        --data '{"event_type": "version_change", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'", "version": "'${API_VERSION}'" }}'
