@@ -2,6 +2,8 @@
 
 This Angular project provides the Bee Web front-end.
 
+![build](https://github.com/BeeRaspberry/beeweb-ui/workflows/build/badge.svg)
+
 ## To Test build locally
 * run `ng build --prod` to create a local build.
 * modify `dist/beeweb-ui/assets/env.js` to use your backend api.
