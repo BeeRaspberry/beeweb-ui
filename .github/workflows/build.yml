@@ -27,8 +27,7 @@ jobs:
         DIFF=$(git diff HEAD^ HEAD VERSION)
         if [[ -z "$DIFF" ]]; then
           IFS='.'; read -r -a array <<< "$(cat VERSION)"
-          CNT="${array[1]}"
-          ((CNT++))
+          CNT=$((${array[1]} + 1))
           echo "${array[0]}.${CNT}.0" >VERSION
           echo ::set-env name=VERSION_CHANGE::1
         fi
