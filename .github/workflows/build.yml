@@ -48,6 +48,7 @@ jobs:
         force: true
 
     - name: Notify Helm Chart Repo of the Commit
+      if: env.VERSION_CHANGE == 1 && github.ref == 'refs/heads/master'
       run: |
         API_VERSION=$(cat VERSION)
         curl -X POST https://api.github.com/repos/BeeRaspberry/helm-charts/dispatches \
