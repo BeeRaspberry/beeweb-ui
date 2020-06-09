@@ -1,7 +1,12 @@
 name: build
 
-on: [push]
-
+on: 
+  push:
+    paths-ignore:
+    - '.github/workflows/**'
+    - 'README.md'
+    - 'hooks/**'
+    
 jobs:
   build:
 
@@ -46,6 +51,26 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         force: true
+
+    - name: Build image
+      if: github.ref == 'refs/heads/master'
+      run: docker build . --tag $TAG_NAME
+
+    - name: Scan image
+      if: github.ref == 'refs/heads/master'
+      uses: anchore/scan-action@master
+      with:
+        image-reference: "localbuild/bee-api:latest"
+        fail-build: true
+
+    - name: Publish to Registry
+      if: github.ref == 'refs/heads/master'
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: beeraspberry/bee-api
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        tags: "latest,${( env.TAG_NAME }}"
 
     - name: Notify Helm Chart Repo of the Commit
       if: env.VERSION_CHANGE == 1 && github.ref == 'refs/heads/master'
