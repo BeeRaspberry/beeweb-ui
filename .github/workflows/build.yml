@@ -45,6 +45,38 @@ jobs:
         git add VERSION
         git commit -m "Updated VERSION file"
   
+    - name: Build image
+      env:
+        TAG_NAME: "$(cat VERSION)"
+      run: |
+        echo ::set-env name=IMAGE_NAME::"${{ env.TAG_NAME }}"
+        docker build . --tag "bee-ui:latest"
+        docker tag bee-api:latest "bee-ui:${{ env.TAG_NAME }}"
+
+    - name: Scan image
+      uses: anchore/scan-action@master
+      with:
+        image-reference: "bee-ui:latest"
+        fail-build: true
+
+    - name: Upload Scan Vulnerabilities Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: vulnerabilities
+        path: anchore-reports/vulnerabilities.json 
+
+    - name: Upload Scan Policy Evaluation Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: policy_evaluation
+        path: anchore-reports/policy_evaluation.json 
+
+    - name: Upload Scan Content Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: content
+        path: anchore-reports/content.json 
+
     - name: Push changes to master
       if: env.VERSION_CHANGE == 1 && github.ref == 'refs/heads/master'
       uses: ad-m/github-push-action@master
@@ -52,26 +84,15 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         force: true
 
-    - name: Build image
-      if: github.ref == 'refs/heads/master'
-      run: docker build . --tag $TAG_NAME
-
-    - name: Scan image
-      if: github.ref == 'refs/heads/master'
-      uses: anchore/scan-action@master
-      with:
-        image-reference: "localbuild/bee-api:latest"
-        fail-build: true
-
     - name: Publish to Registry
       if: github.ref == 'refs/heads/master'
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: beeraspberry/bee-api
+        name: beeraspberry/bee-ui
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
-        tags: "latest,${( env.TAG_NAME }}"
-
+        tags: "latest,${{ env.IMAGE_NAME }}"
+        
     - name: Notify Helm Chart Repo of the Commit
       if: env.VERSION_CHANGE == 1 && github.ref == 'refs/heads/master'
       run: |
