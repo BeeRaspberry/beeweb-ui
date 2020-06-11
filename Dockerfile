@@ -19,9 +19,8 @@ FROM nginx:1.18.0-alpine
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/dist/beeweb-ui/ /usr/share/nginx/html
 COPY ./nginx-template.conf ./nginx-template.conf
-#COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-#WORKDIR /app
 COPY entrypoint.sh ./entrypoint.sh
+
 RUN chmod +x ./entrypoint.sh
 
 EXPOSE 80
