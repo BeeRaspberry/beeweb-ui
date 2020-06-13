@@ -19,4 +19,3 @@ The container accepts three, environment variables:
 
 **OPTIONAL**
 *   `DEBUG` indicates the Angular Debug flag. DEFAULT: false
-
