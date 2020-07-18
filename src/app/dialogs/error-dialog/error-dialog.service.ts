@@ -6,7 +6,7 @@ import { ErrorDialogComponent } from './error-dialog.component';
 export class ErrorDialogService {
 
     constructor(public dialog: MatDialog) { }
-    openDialog(data): void {
+    openDialog(data: any): void {
         const dialogRef = this.dialog.open(ErrorDialogComponent, {
             width: '300px',
             data: data

@@ -21,8 +21,6 @@ COPY entrypoint.sh ./entrypoint.sh
 
 RUN chmod +x ./entrypoint.sh
 
-EXPOSE 80
-
 #ENTRYPOINT [ "sh", "/app/entrypoint.sh" ]
 CMD ["/bin/sh",  "-c",  "./entrypoint.sh && exec nginx -g 'daemon off;'"]
 

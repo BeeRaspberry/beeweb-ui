@@ -32,6 +32,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
+          console.log(event);
                     // this.errorDialogService.openDialog(event);
         }
         return event;
@@ -39,9 +40,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         let data = {};
         data = {
-          reason: error && error.error.reason ? error.error.reason : '',
+          reason: error && error.statusText ? error.statusText : error.message,
           status: error.status
         };
+        console.log(data);
         this.errorDialogService.openDialog(data);
         return throwError(error);
       }));

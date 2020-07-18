@@ -10,7 +10,7 @@ export class ErrorDialogComponent {
   title = 'BeeWeb Error';
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: string,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ErrorDialogComponent>,
   ) {
   }
