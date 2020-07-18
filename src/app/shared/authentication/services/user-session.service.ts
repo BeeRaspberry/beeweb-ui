@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { SocialAuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { map } from 'rxjs/operators';
 import { User } from '../../../models';
 import { AppConfigService } from '../../../core/services/app-config.service';
@@ -17,7 +17,7 @@ export class UserSessionService {
 
   constructor(
     private http: HttpClient,
-    private socialAuthService: AuthService,
+    private socialAuthService: SocialAuthService,
     private configService: AppConfigService
   ) {
     this.currentUserSubject = new BehaviorSubject<User>(localStorage.currentUser);
