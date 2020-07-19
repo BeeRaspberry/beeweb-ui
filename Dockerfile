@@ -21,7 +21,4 @@ COPY entrypoint.sh ./entrypoint.sh
 
 RUN chmod +x ./entrypoint.sh
 
-#ENTRYPOINT [ "sh", "/app/entrypoint.sh" ]
 CMD ["/bin/sh",  "-c",  "./entrypoint.sh && exec nginx -g 'daemon off;'"]
-
-#CMD ["/bin/sh",  "-c",  "export API_URL='${API_URL}'; envsubst '$API_URL' < ./nginx-template.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
