@@ -16,9 +16,5 @@ FROM nginx:1.18.0-alpine
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/dist/beeweb-ui/ /usr/share/nginx/html
-COPY ./nginx-template.conf ./nginx-template.conf
-COPY entrypoint.sh ./entrypoint.sh
 
-RUN chmod +x ./entrypoint.sh
-
-CMD ["/bin/sh",  "-c",  "./entrypoint.sh && exec nginx -g 'daemon off;'"]
+CMD ["/bin/sh",  "-c",  "exec nginx -g 'daemon off;'"]
