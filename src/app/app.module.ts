@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { CustomMaterialModule } from './material.module';
 import { LoginComponent } from './modules/user/login.component';
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
-import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider,
+import { SocialAuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider,
   SocialLoginModule } from 'angularx-social-login';
 import { ErrorDialogService } from './dialogs/error-dialog/error-dialog.service';
 import { ErrorDialogComponent } from './dialogs/error-dialog/error-dialog.component';
@@ -36,25 +36,6 @@ import { AppInjector } from './core/services/app-injector.service';
 
 export function getAppConfig(appConfig: AppConfigService) {
   return () => appConfig.loadConfig();
-}
-
-export function getAuthServiceConfigs() {
-  return new AuthServiceConfig(
-      [
-        {
-          id: FacebookLoginProvider.PROVIDER_ID,
-          provider: new FacebookLoginProvider('Your-Facebook-app-id')
-        },
-        {
-          id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('.apps.googleusercontent.com')
-        },
-//        {
-//          id: LinkedinLoginProvider.PROVIDER_ID,
-//          provider: new LinkedinLoginProvider('.apps.googleusercontent.com')
-//        },
-      ]
-  );
 }
 
 @NgModule({
@@ -93,8 +74,24 @@ export function getAuthServiceConfigs() {
       useClass: HttpConfigInterceptor, 
       multi: true 
     },
-    { provide: AuthServiceConfig, 
-      useFactory: getAuthServiceConfigs 
+    { provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('Your-Facebook-app-id')
+          },
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('.apps.googleusercontent.com')
+          },
+    //       {
+    //          id: LinkedinLoginProvider.PROVIDER_ID,
+    //          provider: new LinkedinLoginProvider('.apps.googleusercontent.com')
+    //        },
+        ],
+      } as SocialAuthServiceConfig,
     },
     {
       provide: APP_INITIALIZER,

@@ -1,4 +1,3 @@
-set -x
 echo "Replace Template settings"
 
 if test -z "$PRODUCTION"; then
@@ -11,7 +10,7 @@ if test -z "$DEBUG"; then
 fi
 
 if test -z "$PORT"; then
-  PORT="80"
+  PORT="8080"
 fi
 export PORT=$PORT
 
@@ -32,7 +31,5 @@ REPLACE_VARS='$SERVICE_NAME:$DOMAIN_NAME:$PORT'
 
 echo "Replace VARS"
 envsubst '${SERVICE_NAME},${DOMAIN_NAME},${PORT}' < ./nginx-template.conf > /etc/nginx/conf.d/default.conf
-
-cat /etc/nginx/conf.d/default.conf
 
 echo "entrypoint done"
