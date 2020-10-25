@@ -1,9 +1,24 @@
+# The flow is:
+#  - all branches:
+#  
+#    - install dependencices
+#      - lint code
+#      - run tests
+#      - publish test results
+#      - build docker image
+#      - scan docker image for vulnerabilities
+#  - master branch: Includes all the steps above
+#      - checks to see if VERSION file was increment, if not increments
+#        and pushes the file to master
+#      - push the docker image to Docker Hub
+#      - notify 'helm' repo of the changes
+
 name: build
 
 on: 
   push:
     paths-ignore:
-    - '.github/workflows/**'
+#    - '.github/workflows/**'
     - 'README.md'
     - 'hooks/**'
     
@@ -22,6 +37,26 @@ jobs:
         git config user.name "$GITHUB_ACTOR"
         git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
         echo ::set-env name=VERSION_CHANGE::0
+
+    - name: Build image
+      run: |
+        docker build . --tag "bee-ui:latest"
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'bee-ui:latest'
+        format: 'template'
+        template: '@/contrib/sarif.tpl'
+        exit-code: '1'
+        ignore-unfixed: true
+        severity: 'CRITICAL,HIGH'
+        output: 'trivy-results.sarif'
+
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: 'trivy-results.sarif'
 
 # Following logic updates the value in VERSION automatically, on 'master'
 # Assume since the developer didn't change the version then this is a minor change.
@@ -44,38 +79,6 @@ jobs:
         git config --local user.name ${GITHUB_ACTOR}
         git add VERSION
         git commit -m "Updated VERSION file"
-  
-    - name: Build image
-      env:
-        TAG_NAME: "$(cat VERSION)"
-      run: |
-        echo ::set-env name=IMAGE_NAME::"${{ env.TAG_NAME }}"
-        docker build . --tag "bee-ui:latest"
-        docker tag bee-ui:latest "bee-ui:${{ env.TAG_NAME }}"
-
-    - name: Scan image
-      uses: anchore/scan-action@master
-      with:
-        image-reference: "bee-ui:latest"
-        fail-build: true
-
-    - name: Upload Scan Vulnerabilities Results
-      uses: actions/upload-artifact@v2
-      with:
-        name: vulnerabilities
-        path: anchore-reports/vulnerabilities.json 
-
-    - name: Upload Scan Policy Evaluation Results
-      uses: actions/upload-artifact@v2
-      with:
-        name: policy_evaluation
-        path: anchore-reports/policy_evaluation.json 
-
-    - name: Upload Scan Content Results
-      uses: actions/upload-artifact@v2
-      with:
-        name: content
-        path: anchore-reports/content.json 
 
     - name: Push changes to master
       if: env.VERSION_CHANGE == 1 && github.ref == 'refs/heads/master'
@@ -91,7 +94,7 @@ jobs:
         name: beeraspberry/bee-ui
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
-        tags: "latest,${{ env.IMAGE_NAME }}"
+        tags: "latest,$(cat VERSION)"
 
     - name: Notify Helm Chart Repo of the Commit
       if: env.VERSION_CHANGE == 1 && github.ref == 'refs/heads/master'
