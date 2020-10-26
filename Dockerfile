@@ -1,10 +1,11 @@
-FROM node:14.1.0-alpine3.11 as builder
+FROM node:14.14.0-alpine3.11 as builder
 
 WORKDIR /app
 
 COPY package.json /app/
+COPY package-lock.json /app/
 
-RUN npm install @angular/cli@10.0.3 -g
+RUN npm install @angular/cli@10.2.0 -g
 
 RUN npm install
 
