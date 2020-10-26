@@ -1,4 +1,4 @@
-FROM node:14.14.0-alpine3.11 as builder
+FROM node:14.14.0-alpine3.12 as builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY . .
 
 RUN npm run build --prod
 
-FROM nginx:1.18.0-alpine
+FROM nginx:1.19.3-alpine
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/dist/beeweb-ui/ /usr/share/nginx/html

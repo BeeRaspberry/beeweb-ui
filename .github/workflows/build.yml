@@ -36,7 +36,7 @@ jobs:
       run: |
         git config user.name "$GITHUB_ACTOR"
         git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-        echo ::set-env name=VERSION_CHANGE::0
+        echo "VERSION_CHANGE=0" >> $GITHUB_ENV
 
     - name: Build image
       run: |
@@ -69,7 +69,7 @@ jobs:
           IFS='.'; read -r -a array <<< "$(cat VERSION)"
           CNT=$((${array[1]} + 1))
           echo "${array[0]}.${CNT}.0" >VERSION
-          echo ::set-env name=VERSION_CHANGE::1
+          echo "VERSION_CHANGE=1" >> $GITHUB_ENV
         fi
 
     - name: Commit Updated Version File
@@ -87,6 +87,11 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         force: true
 
+    - name: Set Image Version
+      run: |
+        IMAGE_VERSION=$(cat VERSION)
+        echo "IMAGE_VERSION=${IMAGE_VERSION}" >> $GITHUB_ENV
+        
     - name: Publish to Registry
       if: github.ref == 'refs/heads/master'
       uses: elgohr/Publish-Docker-Github-Action@master
@@ -94,7 +99,7 @@ jobs:
         name: beeraspberry/bee-ui
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
-        tags: "latest,$(cat VERSION)"
+        tags: "latest,${{ env.IMAGE_VERSION }}"
 
     - name: Notify Helm Chart Repo of the Commit
       if: env.VERSION_CHANGE == 1 && github.ref == 'refs/heads/master'
