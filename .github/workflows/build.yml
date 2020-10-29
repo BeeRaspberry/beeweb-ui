@@ -96,12 +96,13 @@ jobs:
       if: github.ref == 'refs/heads/master'
       run: |
         docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
-        docker tag bee-ui:latest beeraspberry/bee-ui:$(cat VERSION)
-        
+        docker push bee-ui:latest beeraspberry/bee-ui:latest
+        docker tag beeraspberry/bee-ui:latest beeraspberry/bee-ui:${IMAGE_VERSION}
+
     - name: Notify Helm Chart Repo of the Commit
       if: env.VERSION_CHANGE == 1 && github.ref == 'refs/heads/master'
       run: |
-        API_VERSION=$(cat VERSION)
+        API_VERSION=${IMAGE_VERSION}
         curl -X POST https://api.github.com/repos/BeeRaspberry/helm-charts/dispatches \
         -H 'Accept: application/vnd.github.everest-preview+json' \
         -H 'Content-Type: application/json' \
