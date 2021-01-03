@@ -1,15 +1,17 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialogRef } from '@angular/material/dialog';
-import {Injectable} from '@angular/core';
-import {FormBuilder, FormControl, Validators, FormGroup} from "@angular/forms";
-import {first} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
+import { first } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+
+import { LoginModalService } from '../../shared/authentication/services/login-modal.service';
 import { UserSessionService } from '../../shared/authentication/services/user-session.service';
 import { ErrorDialogService } from '../../dialogs/error-dialog/error-dialog.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { LoginModalService } from '../../shared/authentication/services/login-modal.service';
-import {Subscription} from 'rxjs/Subscription';
-import {LoginState} from '../../shared/authentication/login-state.interface';
+import { LoginUserResponse } from '../../shared/authentication/services/interfaces';
+import { LoginState } from '../../shared/authentication/login-state.interface';
 
 @Component({
     selector: 'app-login-modal',
@@ -17,15 +19,17 @@ import {LoginState} from '../../shared/authentication/login-state.interface';
     styleUrls: ['login.component.scss']
 })
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 
-export class LoginComponent implements OnInit {
-  private subscription: Subscription;
+export class LoginComponent implements OnInit, OnDestroy {
+  private errorSub: Subscription;
+  private loginSub: Subscription;
   loginForm: FormGroup;
   loading = false;
   returnUrl: string = '/';
   submitted = false;
   showLoginModal = false;
+  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +48,7 @@ export class LoginComponent implements OnInit {
 
   get f() { return this.loginForm.controls; }
 
-  login() {
+  login(platform: string) {
     this.submitted = true;
 
     if (this.loginForm.invalid) {
@@ -52,39 +56,24 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.userSessionService.login(this.f.email.value, this.f.password.value)
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.close();
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.errorDialogService.openDialog(error);
-          this.loading = false;
-        });
-  }
-
-  socialSignIn(socialPlatform: string) {
-    this.submitted = true;
-    this.loading = true;
-    const user = this.userSessionService.socialSignIn(socialPlatform);
-    this.userSessionService.socialLogin()
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.close();
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.errorDialogService.openDialog(error);
-          this.loading = false;
-        }
-      );
+    const response = this.userSessionService.login(this.f.emailFormControl.value, this.f.passwordFormControl.value, platform);
+    if (response) {
+      this.errorDialogService.openDialog(response);
+      this.loading = false;
+    } else {
+        this.close();
+        this.router.navigate([this.returnUrl]);
+    }
   }
 
   ngOnInit() {
     this.subscribeToLoginModal();
+    this.errorSub = this.userSessionService.error_message.asObservable()
+      .subscribe((error: string) => {
+        const tempError = {'reason': error, status: ''};
+        this.errorDialogService.openDialog(tempError);
+        this.loading = false;
+      })
   }
 
   close() {
@@ -92,10 +81,15 @@ export class LoginComponent implements OnInit {
   }
 
   subscribeToLoginModal() {
-    this.subscription = this.loginModalService.loginSubject.asObservable()
+    this.loginSub = this.loginModalService.loginSubject.asObservable()
       .subscribe((state: LoginState) => {
         this.showLoginModal = state.show;
       });
   }
 
+  ngOnDestroy() {
+    if (this.loginSub) {
+      this.loginSub.unsubscribe();
+    }
+  }
 }

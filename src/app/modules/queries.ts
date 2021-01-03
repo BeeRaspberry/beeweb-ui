@@ -32,7 +32,6 @@ export const USER_LIST = gql `
   }
 `
 
-
 export const DELETE_USER = gql `
   mutation deleteUser($id: ID!) {
     deleteUser(input:{id: $id})
@@ -43,8 +42,8 @@ export const DELETE_USER = gql `
 `
 
 export const CREATE_USER = gql `
-  mutation deleteUser($id: ID!) {
-    deleteUser(input:{id: $id})
+  mutation createUser($id: ID!) {
+    createUser(input:{id: $id})
   {
     ok
   }

@@ -24,27 +24,15 @@
 <!--     <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner> -->
    </mat-card-content>
    <mat-card-actions>
-     <button mat-raised-button (click)="login()" color="primary">Login</button>
-     <button mat-raised-button (click)="close()">Cancel</button>
-   </mat-card-actions>
+      <button mat-stroked-button color="primary" (click)="login('email')">Login</button>
+      <button mat-stroked-button color="secondary" (click)="login('facebook')">Facebook</button>
+      <button mat-stroked-button color="secondary" (click)="login('google')">Google</button>
+      <button mat-stroked-button (click)="close()">Cancel</button>
+    </mat-card-actions>
 
   <mat-card-actions layout="row">
     <a href="" class="md-primary">Forgot Password?</a>
     <span flex></span>
   </mat-card-actions>
 
-    <div flex>
-      <p>Or login using:</p>
-      <button mat-raised-button flex="100" color="primary" style="font-size:18px;" (click)="socialSignIn('facebook')">
-        <span>Facebook</span>
-      </button>
-      &nbsp;&nbsp;&nbsp;
-      <button mat-raised-button flex="100" color="primary" style="font-size:18px;" (click)="socialSignIn('google')">
-        <span>Google</span>
-      </button>
-      &nbsp;&nbsp;&nbsp;
-<!--      <button mat-raised-button flex="100" color="primary" style="font-size:18px;" (click)="socialSignIn('linkedin')">
-        <span>LinkedIn</span>
-      </button> -->
-    </div>
  </mat-card>

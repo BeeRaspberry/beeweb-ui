@@ -24,15 +24,6 @@ export class LoggedinNavbarComponent implements OnInit {
   }
 
   logout() {
-    this.userSessionService.logout()
-      .pipe(first())
-      .subscribe(
-       data => {
-         this.router.navigate([this.returnUrl]);
-       },
-       error => {
-         this.errorDialogService.openDialog(error);
-         this.loading = false;
-       });
+    this.userSessionService.logout();
   }
 }

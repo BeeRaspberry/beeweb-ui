@@ -6,10 +6,7 @@ import { LoginState } from '../login-state.interface';
   providedIn: 'root'
 })
 export class LoginModalService {
-    public loginSubject: BehaviorSubject<any> = new BehaviorSubject<any>(false);
-
-    constructor() {
-    }
+    loginSubject: BehaviorSubject<LoginState> = new BehaviorSubject<LoginState>({show: false});
 
     show() {
         this.loginSubject.next(<LoginState>{show: true});

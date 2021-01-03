@@ -1,112 +1,106 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { SocialAuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
-import { map } from 'rxjs/operators';
+import { Subject, BehaviorSubject, throwError } from 'rxjs';
+
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, tap, map, first } from 'rxjs/operators';
+import { Apollo } from 'apollo-angular';
+
 import { User } from '../../../models';
+import { ILoginUser, LoginUserResponse } from './interfaces';
 import { AppConfigService } from '../../../core/services/app-config.service';
+import { LOGIN_USER } from './queries';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UserSessionService {
-    private currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
-    private provider: string;
+    private currentUserSubject: BehaviorSubject<ILoginUser>;
+    error_message = new BehaviorSubject<string>(null);
 
   constructor(
     private http: HttpClient,
-    private socialAuthService: SocialAuthService,
+    private apollo: Apollo,
     private configService: AppConfigService
   ) {
-    this.currentUserSubject = new BehaviorSubject<User>(localStorage.currentUser);
-    this.currentUser = this.currentUserSubject.asObservable();
+    this.currentUserSubject = new BehaviorSubject<ILoginUser>(localStorage.currentUser);
+//    this.currentUser = this.currentUserSubject.asObservable();
   }
 
   getLoggedIn(): boolean {
-    const temp = JSON.parse(localStorage.getItem('currentUser'));
-    if (temp && 'id' in temp) {
+    const storage = localStorage.getItem('currentUser');
+    if (storage) {
+      const temp = JSON.parse(storage);
+      if (temp && 'accessToken' in temp) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getSuper(): boolean {
+    const role = this.getRole();
+    if (role && role === 'super') {
       return true;
     }
     return false;
   }
 
   getAdmin(): boolean {
-    const temp = JSON.parse(localStorage.getItem('currentUser'));
-    if (temp && 'admin' in temp) {
+    const role = this.getRole();
+    if (role && role === 'admin') {
       return true;
     }
-    return false;
+    return false;  
   }
 
   getUserName(): string {
-    const temp = localStorage.getItem('currentUser');
-    const userName = JSON.parse(localStorage.getItem('currentUser'));
-    if ('name' in userName) { return userName['name'] };
-    return userName['first_name'] + ' ' + userName['last_name'];
-  }
-
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.configService.getApiURL()}/login`, { email, password })
-        .pipe(map(user => {
-        // login successful if there's a jwt token in the response
-          if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
-          }
-          return user;
-      }));
-  }
-
-  socialLogin(): Observable<any> {
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.post<any>(`${this.configService.getApiURL()}/sociallogin`, { user })
-        .pipe(map(userData => {
-        // login successful if there's a jwt token in the response
-          if (userData && userData.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(userData));
-            this.currentUserSubject.next(userData);
-          }
-          return userData;
-      }));
-  }
-
-  socialSignIn(socialPlatform: string) {
-    this.provider = socialPlatform;
-
-    let socialPlatformProvider;
-    if (socialPlatform === 'facebook') {
-      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-    } else if (socialPlatform === 'google') {
-      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
-//    } else if (socialPlatform === 'linkedin') {
-//      socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
+    const storage = localStorage.getItem('currentUser');
+    if (storage) {
+      const temp = JSON.parse(storage);
+      if (temp && 'name' in temp) {
+        return temp['name'] 
+      };
+      return temp['first_name'] + ' ' + temp['last_name'];
     }
-
-    this.socialAuthService.signIn(socialPlatformProvider).then(
-      (userData) => {
-        localStorage.setItem('currentUser', JSON.stringify(userData));
-        this.currentUserSubject.next(userData);
-        // Now sign-in with userData
-        // ...
-        return  userData;
-        }
-     );
+    return null;
   }
 
-  logout(): Observable<any> {
+  login(email: string, password: string, provider: string): any {
+    this.apollo.mutate<LoginUserResponse>({
+      mutation: LOGIN_USER,
+      variables: {
+        email: email,
+        password: password,
+        provider: provider
+      },
+    }).pipe(first())
+    .subscribe(({ data }) => {
+      localStorage.setItem('currentUser', JSON.stringify(data.loginUser));
+      return null;
+    }, (error) => {
+      return {reason: error.message, status: ''};
+    });
+  }
+
+  logout() {
+    localStorage.removeItem('currentUser');
     const userData = JSON.parse(localStorage.getItem('currentUser'));
-    if (userData['provider']) {
-      this.socialAuthService.signOut().then(data => {
-      });
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!'
+    return throwError(errorMessage);
+  }
+
+  private getRole(): string {
+    const storage = localStorage.getItem('currentUser');
+    if (storage) {
+      const temp = JSON.parse(storage);
+      if (temp && 'role' in temp) {
+          return temp.role;
+      }
     }
-    return this.http.post<any>(`${this.configService.getApiURL()}/logout`, { userData })
-        .pipe(map(user => {
-          localStorage.setItem('currentUser', '');
-          localStorage.clear();
-        }));
-    }
+    return null;
+  }
 }
